@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet } from "react-native";
 // Navigation
@@ -8,9 +7,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 // Screens
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import CreateUserScreen from "./screens/CreateUserScreen";
-import UserDetailScreen from "./screens/UserDetailScreen";
-import UsersList from "./screens/UsersList";
+import CrearUsuario from "./screens/CrearUsuario";
+import DetalleListaUsuario from "./screens/DetalleListaUsuario";
+import ListaUsuarios from "./screens/ListaUsuarios";
 
 const Stack = createStackNavigator();
 
@@ -19,18 +18,22 @@ function MyStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#621FF7",
+          backgroundColor: '#AEB2B5',
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
+          textAlign: "center"
         },
       }}
     >
+      
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{ title: "Login Screen" }}
+        options={{ title: "Login Screen",
+        ali: "center",
+      }}
       />
 
       <Stack.Screen
@@ -40,19 +43,19 @@ function MyStack() {
       />
 
       <Stack.Screen
-        name="UsersList"
-        component={UsersList}
-        options={{ title: "Users List" }}
+        name="ListaUsuarios"
+        component={ListaUsuarios}
+        options={{ title: "usuarios List" }}
       />
       <Stack.Screen
-        name="CreateUserScreen"
-        component={CreateUserScreen}
-        options={{ title: "Create a New User" }}
+        name="CrearUsuario"
+        component={CrearUsuario}
+        options={{ title: "Create a New usuario" }}
       />
       <Stack.Screen
-        name="UserDetailScreen"
-        component={UserDetailScreen}
-        options={{ title: "User Detail" }}
+        name="DetalleListaUsuario"
+        component={DetalleListaUsuario}
+        options={{ title: "usuario Detail" }}
       />
     </Stack.Navigator>
   );

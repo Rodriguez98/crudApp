@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   ScrollView,
-  Button,
   View,
   Alert,
   ActivityIndicator,
@@ -14,34 +13,36 @@ import firebase from "../database/firebase";
 const UserDetailScreen = (props) => {
   const initialState = {
     id: "",
-    name: "",
-    email: "",
-    phone: "",
+    nombre: "",
+    correo: "",
+    celular: "",
+    cedula: "",
+    descripcion: "",
   };
 
-  const [user, setUser] = useState(initialState);
+  const [usuario, setUsuario] = useState(initialState);
   const [loading, setLoading] = useState(true);
 
   const handleTextChange = (value, prop) => {
-    setUser({ ...user, [prop]: value });
+    setUsuario({ ...usuario, [prop]: value });
   };
 
   const getUserById = async (id) => {
-    const dbRef = firebase.db.collection("users").doc(id);
+    const dbRef = firebase.db.collection("usuarios").doc(id);
     const doc = await dbRef.get();
-    const user = doc.data();
-    setUser({ ...user, id: doc.id });
+    const usuario = doc.data();
+    setUsuario({ ...usuario, id: doc.id });
     setLoading(false);
   };
 
   const deleteUser = async () => {
     setLoading(true)
     const dbRef = firebase.db
-      .collection("users")
-      .doc(props.route.params.userId);
+      .collection("usuarios")
+      .doc(props.route.params.usuarioId);
     await dbRef.delete();
     setLoading(false)
-    props.navigation.navigate("UsersList");
+    props.navigation.navigate("ListaUsuarios");
   };
 
   const openConfirmationAlert = () => {
@@ -59,18 +60,20 @@ const UserDetailScreen = (props) => {
   };
 
   const updateUser = async () => {
-    const userRef = firebase.db.collection("users").doc(user.id);
+    const userRef = firebase.db.collection("usuarios").doc(usuario.id);
     await userRef.set({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+         nombre: state.nombre,
+          correo: state.correo,
+          celular: state.celular,
+          cedula: state.cedula,
+          descripcion: state.descripcion,
     });
-    setUser(initialState);
-    props.navigation.navigate("UsersList");
+    setUsuario(initialState);
+    props.navigation.navigate("ListaUsuarios");
   };
 
   useEffect(() => {
-    getUserById(props.route.params.userId);
+    getUserById(props.route.params.usuarioId);
   }, []);
 
   if (loading) {
@@ -85,41 +88,61 @@ const UserDetailScreen = (props) => {
     <ScrollView style={styles.container}>
       <View>
         <TextInput
-          placeholder="Name"
-          autoCompleteType="username"
+          placeholder="nombre"
           style={styles.inputGroup}
-          value={user.name}
-          onChangeText={(value) => handleTextChange(value, "name")}
+          value={usuario.nombre}
+          onChangeText={(value) => handleTextChange(value, "nombre")}
         />
       </View>
       <View>
         <TextInput
-          autoCompleteType="email"
-          placeholder="Email"
+          placeholder="correo"
           style={styles.inputGroup}
-          value={user.email}
-          onChangeText={(value) => handleTextChange(value, "email")}
+          value={usuario.correo}
+          onChangeText={(value) => handleTextChange(value, "correo")}
         />
       </View>
       <View>
         <TextInput
-          placeholder="Phone"
-          autoCompleteType="tel"
+          placeholder="celular"
           style={styles.inputGroup}
-          value={user.phone}
-          onChangeText={(value) => handleTextChange(value, "phone")}
+          value={usuario.celular}
+          onChangeText={(value) => handleTextChange(value, "celular")}
         />
       </View>
-      <View style={styles.btn}>
+
+      <View>
+        <TextInput
+          placeholder="cedula"
+          style={styles.inputGroup}
+          value={usuario.cedula}
+          onChangeText={(value) => handleTextChange(value, "cedula")}
+        />
+      </View>
+      
+      <View>
+        <TextInput
+          placeholder="descripcion"
+          style={styles.inputGroup}
+          value={usuario.descripcion}
+          onChangeText={(value) => handleTextChange(value, "descripcion")}
+        />
+
+      </View>
+
+      {/*<View style={styles.btn}>
         <Button
           title="Delete"
           onPress={() => openConfirmationAlert()}
           color="#E37399"
         />
-      </View>
-      <View>
+
+      </View>*/}
+
+      {/*<View>
         <Button title="Update" onPress={() => updateUser()} color="#19AC52" />
-      </View>
+      </View>*/}
+
     </ScrollView>
   );
 };
@@ -128,6 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 35,
+    backgroundColor: '#AEB2B5'
   },
   loader: {
     left: 0,

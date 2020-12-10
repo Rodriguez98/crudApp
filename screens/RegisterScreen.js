@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from 'react-dom';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import  firebase from 'firebase';
 
@@ -12,9 +11,11 @@ export default class RegisterScreen extends React.Component {
     }
 
     handleSignUp = () => {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(userCredentials => {
-            return userCredentials.user.updateProfile({
+            return userCredentials.usuario.updateProfile({
                 displayName: this.state.name
             })
         })
@@ -22,11 +23,12 @@ export default class RegisterScreen extends React.Component {
         .catch(error => this.setState({errorMessage : error.message}))
     }
 
+
     render(){
         return(
             <View style = { styles.container }>
                 <Text style = { styles.greeting }>
-                    {"Hola Universo"}
+                    {"Bienvenido"}
                 </Text>
 
                 <View style = { styles.errorMessage }>
@@ -50,15 +52,15 @@ export default class RegisterScreen extends React.Component {
                 </View>
 
                 <View style = { styles.form }>
-                    <Text style={ styles.inputTitle}> Email Address </Text>
-                    <TextInput style = { styles.input } autoCapitalize = "none"
+                    <Text style={ styles.inputTitle}> Password </Text>
+                    <TextInput style = { styles.input } secureTextEntry autoCapitalize = "none"
                     onChangeText={ password => this.setState ({ password })}
                     value = {this.state.password}
                     ></TextInput>
                 </View>
 
-                <TouchableOpacity style = { styles.button} onPress = { this.handleSignUp}>
-                    <Text style = {{ color: "#FFF", fontWeight: "500" }}> Sign in</Text>
+                <TouchableOpacity style = { styles.button} onPress = { this.handleSignUp }>
+                    <Text style = {{ color: "#FFF", fontWeight: "500" }}> Registrarse </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style = {{ alignSelf: "center", marginTop: 32 }}
@@ -75,12 +77,13 @@ export default class RegisterScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#AEB2B5'
     },
 
     greeting: {
         marginTop: 32,
         fontSize: 18,
-        fontWeight: "400",
+        fontWeight: "200",
         textAlign: "center",
     },
 
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     },
     
     error: {
-        color: "#e9446a",
+        color: "red",
         fontSize: 10,
         fontWeight: "600",
         textAlign: "center",
@@ -104,13 +107,13 @@ const styles = StyleSheet.create({
     },
 
     inputTitle: {
-        color: "#8a8f9e",
+        color: "black",
         fontSize: 10,
         textTransform: "uppercase",
     },
 
     input: {
-        borderBottomColor: "#8a8f9e",
+        borderBottomColor: "black",
         borderBottomWidth: StyleSheet.hairlineWidth,
         height: 40,
         fontSize: 15,
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
 
     button: {
         marginHorizontal: 30,
-        backgroundColor: "#E9446A",
+        backgroundColor: "#61636E",
         borderRadius: 4,
         height: 52,
         alignItems: "center",
